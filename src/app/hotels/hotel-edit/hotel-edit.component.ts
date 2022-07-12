@@ -23,4 +23,13 @@ export class HotelEditComponent implements OnInit {
      });
   }
 
+  public saveHotel(): void {
+    console.log("hotel Name: ", this.hotelForm.value.hotelName);
+    console.log("hotel Price: ", this.hotelForm.value.hotelPrice);
+    console.log("hotel Rating: ", this.hotelForm.value.starRating);
+    console.log("hotel Description: ", this.hotelForm.value.description);
+    console.log(this.hotelForm);
+    
+  }
+
 }

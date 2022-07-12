@@ -20,6 +20,7 @@ import { HotelEditComponent } from './hotel-edit/hotel-edit.component';
   imports: [
     HotelRoutingModule,
     SharedModule,
+    ReactiveFormsModule,
     FormsModule,
     ReactiveFormsModule
   ]

@@ -80,7 +80,7 @@
 
   <div class="card-body">
   <!-- <div class="card-body" (formControl)="hotelForm"> -->
-  <form novalidate [formGroup]='hotelForm'>
+  <form novalidate (ngSubmit)="saveHotel()" [formGroup]='hotelForm'>
       <div class="form-group row mb-2">
         <label for="hotelNameId" class="col-md-2 col-form-label">
           Nom d'hôtel
@@ -108,15 +108,15 @@
       </div>
 
       <div class="form-group row mb-2">
-        <label for="starRatingId" class="col-md-2 col-form-label">
+        <label for="starRating" class="col-md-2 col-form-label">
           Évaluation
         </label>
         <div class="col-md-8">
           <input
-            id="starRatingId"
+            id="starRating"
             type="text"
             class="form-control"
-            formControlName="starRatingId"
+            formControlName="starRating"
             placeholder="Évaluation (1-5)"
           />
         </div>
@@ -138,7 +138,8 @@
       <div class="form-group row mb-2">
         <div class="offset-md-2 col-md-4">
           <button class="btn btn-info mr-3" type="submit">Sauvegarder</button>
-          <button class="btn btn-outline-secondary mr-3" type="button">
+          <button class="btn btn-outline-secondary mr-3" type="button"
+          routerLink="/hotels">
             Annuler
           </button>
           <button class="btn btn-outline-danger" type="button">
@@ -149,6 +150,6 @@
     </form>
   </div>
 </div>
-<div>
+<pre>
   {{ hotelForm.value | json }}
-</div>
+</pre>

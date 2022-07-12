@@ -15,7 +15,7 @@ import { HotelEditComponent } from './hotels/hotel-edit/hotel-edit.component';
         canActivate: [HotelDetailGuard]
       },
       { path: 'hotels', component: HotelListComponent },
-      { path: 'hotels/:id/edit', component: HotelEditComponent }
+      { path: 'hotels/:id/edit', component: HotelEditComponent },
     ])
   ],
   exports: [ RouterModule ]
