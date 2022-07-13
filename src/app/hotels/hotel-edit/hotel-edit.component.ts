@@ -13,7 +13,9 @@ import { HotelListService } from '../shared/services/hotel-list.service';
 export class HotelEditComponent implements OnInit {
   public hotelForm: FormGroup | any;
 
-  public hotel: IHotel | any;
+  public hotel: IHotel | undefined;
+
+  public pageTitle: string | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -47,6 +49,12 @@ export class HotelEditComponent implements OnInit {
 
   public displayHotel(hotel: IHotel): void {
     this.hotel = hotel;
+
+    if(this.hotel.hotelId == 0) {
+      this.pageTitle = 'Créer un hotel';
+    } else {
+      this.pageTitle = `Modifier l\'hotel ${hotel.hotelName}`;
+    }
 
     this.hotelForm.patchValue({
       hotelName: this.hotel.hotelName,
