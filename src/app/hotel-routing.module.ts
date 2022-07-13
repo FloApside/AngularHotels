@@ -4,6 +4,7 @@ import { HotelDetailComponent } from './hotels/hotel-detail/hotel-detail.compone
 import { HotelDetailGuard } from './hotels/shared/guards/hotel-detail.guard';
 import { HotelListComponent } from './hotels/hotel-list/hotel-list.component';
 import { HotelEditComponent } from './hotels/hotel-edit/hotel-edit.component';
+import { HotelEditGuard } from './hotel-edit.guard';
 
 
 
@@ -15,7 +16,8 @@ import { HotelEditComponent } from './hotels/hotel-edit/hotel-edit.component';
         canActivate: [HotelDetailGuard]
       },
       { path: 'hotels', component: HotelListComponent },
-      { path: 'hotels/:id/edit', component: HotelEditComponent },
+      { path: 'hotels/:id/edit', component: HotelEditComponent,
+    canDeactivate: [HotelEditGuard] },
     ])
   ],
   exports: [ RouterModule ]

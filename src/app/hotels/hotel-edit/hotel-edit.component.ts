@@ -36,7 +36,6 @@ export class HotelEditComponent implements OnInit {
       console.log(id);
 
       this.getSelectedHotel(id);
-
     });
   }
   
@@ -50,11 +49,13 @@ export class HotelEditComponent implements OnInit {
   public displayHotel(hotel: IHotel): void {
     this.hotel = hotel;
 
-    if(this.hotel.hotelId == 0) {
-      this.pageTitle = 'Créer un hotel';
-    } else {
-      this.pageTitle = `Modifier l\'hotel ${hotel.hotelName}`;
-    }
+    // if(this.hotel.hotelId == 0) {
+    //   this.pageTitle = 'Créer un hotel';
+    // } else {
+    //   this.pageTitle = `Modifier l\'hotel ${hotel.hotelName}`;
+    // } 
+    //  OU
+    this.pageTitle = this.hotel.hotelId == 0 ? "Créer un hotel" : `Modifier hotel ${hotel.hotelName}`;
 
     this.hotelForm.patchValue({
       hotelName: this.hotel.hotelName,
