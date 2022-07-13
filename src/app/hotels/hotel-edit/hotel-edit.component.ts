@@ -41,13 +41,14 @@ export class HotelEditComponent implements OnInit {
   
   public getSelectedHotel(id: number): void {
     this.hotelService.getHotelById(id).subscribe((hotel: IHotel) => {
-      console.log('hotel ', hotel);
+      console.log('getSelectedHotel(): ', hotel);
       this.displayHotel(hotel);
     });
   }
 
   public displayHotel(hotel: IHotel): void {
     this.hotel = hotel;
+    console.log("displayHotel(): ", hotel);
 
     // if(this.hotel.hotelId == 0) {
     //   this.pageTitle = 'Créer un hotel';
@@ -55,14 +56,14 @@ export class HotelEditComponent implements OnInit {
     //   this.pageTitle = `Modifier l\'hotel ${hotel.hotelName}`;
     // } 
     //  OU
-    this.pageTitle = this.hotel.hotelId == 0 ? "Créer un hotel" : `Modifier hotel ${hotel.hotelName}`;
+    this.pageTitle = this.hotel.id == 0 ? "Créer un hotel" : `Modifier hotel ${hotel.hotelName}`;
 
     this.hotelForm.patchValue({
       hotelName: this.hotel.hotelName,
       hotelPrice: this.hotel.price,
       starRating: this.hotel.rating,
       description: this.hotel.description
-    });
+    });    
   }
 
   public saveHotel(): void {
@@ -70,6 +71,6 @@ export class HotelEditComponent implements OnInit {
     // console.log("hotel Price: ", this.hotelForm.value.hotelPrice);
     // console.log("hotel Rating: ", this.hotelForm.value.starRating);
     // console.log("hotel Description: ", this.hotelForm.value.description);
-    console.log(this.hotelForm.value);
+    console.log('saveHotel(): ', this.hotelForm.value);
   }
 }

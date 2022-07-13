@@ -7,13 +7,14 @@ import { IHotel } from '../models/hotel';
   providedIn: 'root',
 })
 export class HotelListService {
-  private readonly HOTEL_API_URL = 'api/hotels.json';
+  // private readonly HOTEL_API_URL = 'api/hotels.json';
+  private readonly HOTEL_API_URL = 'api/hotels';
 
   constructor(private http: HttpClient) {}
 
   public getHotels(): Observable<IHotel[]> {
     return this.http.get<IHotel[]>(this.HOTEL_API_URL).pipe(
-      tap((hotels) => console.log('hotels: ', hotels)),
+      tap((hotels) => console.log('getHotels(): ', hotels)),
       catchError(this.handleError)
     );
   }
@@ -24,15 +25,25 @@ export class HotelListService {
       return of(this.getDefaultHotel());
     }
     return this.getHotels().pipe(
-      map((hotels) => hotels.find((hotel) => hotel.hotelId == id))
+      map((hotels) => hotels.find((hotel) => hotel.id == id))
       // tap(hotels => console.log("Hotel by id", hotels))
     );
   }
 
+  // public updateHotel(hotel: IHotel): Observable<IHotel> {
+  //   const url = `${this.HOTEL_API_URL}/${hotel.id}`;
+  //   return this.http.put<IHotel>(url, hotel).pipe(catchError(this.handleError));
+  // }
+
+  public updateHotel(hotel: IHotel): Observable<IHotel> {
+    const url = `${this.HOTEL_API_URL}/${hotel.id}`;
+    return this.http.post<IHotel>(url, hotel).pipe(catchError(this.handleError));
+  }
+
   private getDefaultHotel(): IHotel {
     return {
-        // dans le tuto, null est accepté comme valeur au lieu de '' et 0
-      hotelId: 0,
+      // dans le tuto, null est accepté comme valeur au lieu de '' et 0
+      id: 0,
       hotelName: '',
       description: '',
       price: 0,
