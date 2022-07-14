@@ -27,6 +27,7 @@ export class HotelListService {
     return this.getHotels().pipe(
       map((hotels) => hotels.find((hotel) => hotel.id == id))
       // tap(hotels => console.log("Hotel by id", hotels))
+      // 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
     );
   }
 
