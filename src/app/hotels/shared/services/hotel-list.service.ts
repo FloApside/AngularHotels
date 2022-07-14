@@ -20,14 +20,17 @@ export class HotelListService {
   }
 
   public getHotelById(id: number): Observable<IHotel | any> {
+    const url = `${this.HOTEL_API_URL}/${id}`;
+
     if (id == 0) {
       // of de RXJS permet de créer un Observable à partir d'un objet
       return of(this.getDefaultHotel());
     }
     return this.getHotels().pipe(
+      catchError(this.handleError),
+
       map((hotels) => hotels.find((hotel) => hotel.id == id))
       // tap(hotels => console.log("Hotel by id", hotels))
-    
     );
   }
 

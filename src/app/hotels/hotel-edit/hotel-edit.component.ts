@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IHotel } from '../shared/models/hotel';
 import { HotelListService } from '../shared/services/hotel-list.service';
@@ -20,6 +20,7 @@ export class HotelEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private hotelService: HotelListService
   ) {}
 
@@ -38,39 +39,61 @@ export class HotelEditComponent implements OnInit {
       this.getSelectedHotel(id);
     });
   }
-  
+
   public getSelectedHotel(id: number): void {
     this.hotelService.getHotelById(id).subscribe((hotel: IHotel) => {
-      console.log('getSelectedHotel(): ', hotel);
+      console.log('getSelectedHotel(): ', this.hotel);
       this.displayHotel(hotel);
     });
   }
 
   public displayHotel(hotel: IHotel): void {
     this.hotel = hotel;
-    console.log("displayHotel(): ", hotel);
+    console.log('displayHotel(): ', hotel);
 
     // if(this.hotel.hotelId == 0) {
     //   this.pageTitle = 'Créer un hotel';
     // } else {
     //   this.pageTitle = `Modifier l\'hotel ${hotel.hotelName}`;
-    // } 
+    // }
     //  OU
-    this.pageTitle = this.hotel.id == 0 ? "Créer un hotel" : `Modifier hotel ${hotel.hotelName}`;
+    this.pageTitle =
+      this.hotel.id == 0
+        ? 'Créer un hotel'
+        : `Modifier hotel ${hotel.hotelName}`;
 
     this.hotelForm.patchValue({
       hotelName: this.hotel.hotelName,
       hotelPrice: this.hotel.price,
       starRating: this.hotel.rating,
-      description: this.hotel.description
-    });    
+      description: this.hotel.description,
+    });
   }
 
   public saveHotel(): void {
-    // console.log("hotel Name: ", this.hotelForm.value.hotelName);
-    // console.log("hotel Price: ", this.hotelForm.value.hotelPrice);
-    // console.log("hotel Rating: ", this.hotelForm.value.starRating);
-    // console.log("hotel Description: ", this.hotelForm.value.description);
-    console.log('saveHotel(): ', this.hotelForm.value);
+    console.log('hotel Name: ', this.hotelForm.value.hotelName);
+
+    if (this.hotelForm.valid) {
+      if (this.hotelForm.dirty) {
+        const hotel: IHotel = {
+          ...this.hotel,
+          ...this.hotelForm.value,
+        };
+
+        if (hotel.id == 0) {
+          //
+        } else {
+          this.hotelService.updateHotel(hotel).subscribe({
+            next: () => this.saveCompleted(),
+          });
+        }
+        console.log('saveHotel(): ', this.hotelForm.value);
+      }
+    }
+  }
+
+  public saveCompleted(): void {
+    this.hotelForm.reset();
+    this.router.navigate(['/hotels/list']);
   }
 }
