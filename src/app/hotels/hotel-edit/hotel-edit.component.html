@@ -76,11 +76,11 @@
 <div>Hotel Edit component</div>
 
 <div class="card">
-  <div class="card-header text-white bg-info"> {{ pageTitle }}</div>
+  <div class="card-header text-white bg-info">{{ pageTitle }}</div>
 
   <div class="card-body">
-  <!-- <div class="card-body" (formControl)="hotelForm"> -->
-  <form novalidate (ngSubmit)="saveHotel()" [formGroup]='hotelForm'>
+    <!-- <div class="card-body" (formControl)="hotelForm"> -->
+    <form novalidate (ngSubmit)="saveHotel()" [formGroup]="hotelForm">
       <div class="form-group row mb-2">
         <label for="hotelNameId" class="col-md-2 col-form-label">
           Nom d'hôtel
@@ -101,7 +101,7 @@
           <input
             type="text"
             class="form-control"
-            formControlName="hotelPrice"
+            formControlName="price"
             placeholder="Prix(obligatoire)"
           />
         </div>
@@ -116,7 +116,7 @@
             id="starRating"
             type="text"
             class="form-control"
-            formControlName="starRating"
+            formControlName="rating"
             placeholder="Évaluation (1-5)"
           />
         </div>
@@ -128,23 +128,29 @@
         </label>
         <div class="col-md-8">
           <textarea
-          id="descriptionId"
-          class="form-control"
-          formControlName="description"
+            id="descriptionId"
+            class="form-control"
+            formControlName="description"
           ></textarea>
         </div>
       </div>
-      
+
       <div class="form-group row mb-2">
         <div class="offset-md-2 col-md-4">
-          <button class="btn btn-info mr-3" type="submit">
-            Sauvegarder
-          </button>
-          <button class="btn btn-outline-secondary mr-3" type="button"
-          routerLink="/hotels">
+          <button class="btn btn-info mr-3" type="submit">Sauvegarder</button>
+          <button
+            class="btn btn-outline-secondary mr-3"
+            type="button"
+            routerLink="/hotels"
+          >
             Annuler
           </button>
-          <button class="btn btn-outline-danger" type="button">
+          <button
+            class="btn btn-outline-danger"
+            type="button"
+            [disabled]="this.hotel.id === undefined ? 0 : this.hotel.id"
+            (click)="deleteHotel()"
+          >
             Supprimer
           </button>
         </div>

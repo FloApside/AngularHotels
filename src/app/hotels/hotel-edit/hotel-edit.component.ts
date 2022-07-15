@@ -27,8 +27,8 @@ export class HotelEditComponent implements OnInit {
   ngOnInit(): void {
     this.hotelForm = this.fb.group({
       hotelName: ['', Validators.required],
-      hotelPrice: ['', Validators.required],
-      starRating: [''],
+      price: ['', Validators.required],
+      rating: [''],
       description: [''],
     });
 
@@ -64,8 +64,8 @@ export class HotelEditComponent implements OnInit {
 
     this.hotelForm.patchValue({
       hotelName: this.hotel.hotelName,
-      hotelPrice: this.hotel.price,
-      starRating: this.hotel.rating,
+      price: this.hotel.price,
+      rating: this.hotel.rating,
       description: this.hotel.description,
     });
   }
@@ -81,13 +81,25 @@ export class HotelEditComponent implements OnInit {
         };
 
         if (hotel.id == 0) {
-          //
+          this.hotelService.createHotel(hotel).subscribe({
+            next: () => this.saveCompleted(),
+          });
         } else {
           this.hotelService.updateHotel(hotel).subscribe({
             next: () => this.saveCompleted(),
           });
         }
         console.log('saveHotel(): ', this.hotelForm.value);
+      }
+    }
+  }
+
+  public deleteHotel(): void {
+    if (!!this.hotel) {
+      if (confirm(`Voulez vous vraiment supprimer ${this.hotel.hotelName} ?`)) {
+        this.hotelService.deleteHotel(this.hotel.id).subscribe({
+          next: () => this.saveCompleted(),
+        });
       }
     }
   }
