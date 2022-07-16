@@ -148,7 +148,7 @@
           <button
             class="btn btn-outline-danger"
             type="button"
-            [disabled]="this.hotel.id === undefined ? 0 : this.hotel.id"
+            [disabled]="this.hotel?.id == 0"
             (click)="deleteHotel()"
           >
             Supprimer
