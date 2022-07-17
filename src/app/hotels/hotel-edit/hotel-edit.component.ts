@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IHotel } from '../shared/models/hotel';
@@ -30,6 +30,7 @@ export class HotelEditComponent implements OnInit {
       price: ['', Validators.required],
       rating: [''],
       description: [''],
+      tags: this.fb.array([]),
     });
 
     this.route.paramMap.subscribe((params) => {
@@ -38,6 +39,19 @@ export class HotelEditComponent implements OnInit {
 
       this.getSelectedHotel(id);
     });
+  }
+
+  public get tags(): FormArray {
+    return this.hotelForm.get('tags') as FormArray;
+  }
+
+  public addTags(): void {
+    this.tags.push(new FormControl())
+  }
+
+  public deleteTag(index: number): void {
+    this.tags.removeAt(index);
+    this.tags.markAsDirty();
   }
 
   public getSelectedHotel(id: number): void {
