@@ -72,6 +72,7 @@
           <!-- OU -->
           <ng-container *ngFor="let tag of hotel.tags; let i = index">
             <ng-container *ngIf="showBadge">
+              <!-- <span class="badge rounded-pill" -->
               <span class="badge rounded-pill"
               [ngClass]="i % 2 === 0 ? 'badge-info' : 'badge-success ml-2'">
                 {{ tag }}
