@@ -83,6 +83,7 @@ export class HotelEditComponent implements OnInit {
       description: this.hotel.description,
     });
     this.hotelForm.setControl('tags', this.fb.array(this.hotel.tags || []));
+    //passer la valeur d'un array à un formulaire
   }
 
   public saveHotel(): void {
