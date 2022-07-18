@@ -46,7 +46,7 @@ export class HotelListService {
   }
 
   public updateHotel(hotel: IHotel): Observable<IHotel> {
-    const url = `${this.HOTEL_API_URL}/${hotel.id}`;
+    const url = `${this.HOTEL_API_URL}/${hotel.id}000`;
     return this.http.post<IHotel>(url, hotel).pipe(catchError(this.handleError));
   }
 
@@ -68,13 +68,17 @@ export class HotelListService {
   }
 
   private handleError(error: HttpErrorResponse) {
+    let errorMessage: string;
     if (error.error instanceof ErrorEvent) {
       console.error('An error has occured : ', error.error.message);
+      errorMessage = `An error has occured: Error Message : ${error.error.message}`
     } else {
       console.error(
         `Backend returned code ${error.status}, ` + `body was : ${error.error}`
       );
+      errorMessage = `Backend returned code ${error.status}, ` + `body was : ${error.error}`
     }
-    return throwError('Something wrong happened... Please try again later.');
+    return throwError('Something wrong happened... Please try again later.' + 
+    '\n' + errorMessage);
   }
 }

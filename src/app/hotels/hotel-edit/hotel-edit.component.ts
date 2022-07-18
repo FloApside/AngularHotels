@@ -17,6 +17,8 @@ export class HotelEditComponent implements OnInit {
 
   public pageTitle: string | undefined;
 
+  public errorMessage: string | undefined;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -39,6 +41,10 @@ export class HotelEditComponent implements OnInit {
 
       this.getSelectedHotel(id);
     });
+  }
+
+  public hideError(): void {
+    this.errorMessage = undefined;
   }
 
   public get tags(): FormArray {
@@ -99,10 +105,12 @@ export class HotelEditComponent implements OnInit {
         if (hotel.id == 0) {
           this.hotelService.createHotel(hotel).subscribe({
             next: () => this.saveCompleted(),
+            error: (err) => this.errorMessage = err
           });
         } else {
           this.hotelService.updateHotel(hotel).subscribe({
             next: () => this.saveCompleted(),
+            error: (err) => this.errorMessage = err
           });
         }
         console.log('saveHotel(): ', this.hotelForm.value);
